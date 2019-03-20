@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>第一个Vue应用</title>
+  <!-- 开发环境版本，包含了用帮助的命令行警告 -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+
+  <div id="app-3">
+    <span v-once>{{message}}</span>
+    <span v-html="rawHtml"></span>
+    <p v-if="seen">现在你看到我了</p>
+    <button v-on:click="click1">点击1</button>
+    <input v-model="message" placeholder="请输入信息">
+    <a v-bind:href="url">点击跳转</a>
+
+    <ul>
+      <li v-for="item in items">{{item.tag}}</li>
+    </ul>
+
+    <ul>
+      <li v-for="value in object1">{{value}}</li>
+    </ul>
+
+    <select v-model="selecteed">
+      <option v-for="option in options" v-bind:value="option.value">{{option.text}}</option>
+    </select>
+    <span>{{selecteed}}</span>
+
+    <input type="number" v-model.number="age" />
+    <span>{{age}}</span>
+  <button-couter></button-couter>
+    <button v-on:click="$emit('enlarge-text')">abc</button>
+  </div>
+
+</div>
+<script>
+  // var app = new Vue({
+  //   el:'#app',
+  //   data:{
+  //     message:'Hello Vue!'
+  //   }
+  // });
+
+  //自定义组件
+  Vue.component('button-couter',{
+    data:function () {
+      return {
+        count:0,
+      }
+    },
+    template : '<button v-on:click="count++">click me {{count}}</button>'
+  });
+
+  var app3 = new Vue({
+    el: '#app-3',
+    data: {
+      seen: true,
+      message: 'abc',
+      rawHtml: '<p>rawhtmlcontent</p>',
+      url: 'https://www.baidu.com',
+      items: [
+        {tag: 'tag1'},
+        {tag: 'tag2'}
+      ],
+      object1: {
+        name: 'liheyu',
+        old: '18',
+      },
+      selecteed: '',
+      options: [
+        {text: 'one', value: 'A'},
+        {text: 'two', value: 'B'},
+        {text: 'three', value: 'C'},
+      ]
+    },
+    toggle: '',
+    methods: {
+      click1: function () {
+        console.log("click1")
+      }
+    }
+  });
+  app3.$watch('message', function (newValue, oldVale) {
+    console.log(newValue + "--" + oldVale)
+  })
+  // app3.seen = false;
+</script>
+</body>
+</html>
